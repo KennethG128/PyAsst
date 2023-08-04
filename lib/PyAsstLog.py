@@ -15,7 +15,7 @@ def printInfo(msg):
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
-    # 定义handler处理器 输出文件
+    # 定义handler处理器 输出文件.文件按照天拆分
     file_handler = logging.handlers.TimedRotatingFileHandler(log_file, when='D')
     file_handler.setFormatter(log_format)
     logger.addHandler(file_handler)
