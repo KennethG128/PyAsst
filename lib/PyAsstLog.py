@@ -4,7 +4,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 
-def printInfo(msg):
+def info(msg):
 
     # 定义日志路径+文件名
     log_file = cf.Log_Path + 'logfile.log'
