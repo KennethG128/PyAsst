@@ -70,14 +70,18 @@ class PrpCrypt(object):
 
 
 # --------------------------------------------
-if __name__ == '__main__':
-    data = ''
-    pc = PrpCrypt('daajanbaqa654321', '1234567890123456')
-    redata = pc.encrypt(data)
-    print(redata)
-    result = pc.decrypt(redata)
-    print(result)
-    pc = PrpCrypt('1', '2')
-    password = pc.decrypt()  # 解密
-    print(password)
+# if __name__ == '__main__':
+#     # 输入明文
+#     data = ''
+#
+#     pc = PrpCrypt('daajanbaqa654321', '1234567890123456')
+#     redata = pc.encrypt(data)
+#     print(redata)
+#     result = pc.decrypt(redata)
+#     print(result)
+#     pc = PrpCrypt('1', '2')
+#
+#     # 解密
+#     password = pc.decrypt()
+#     print(password)
 #---------------------------------------------
