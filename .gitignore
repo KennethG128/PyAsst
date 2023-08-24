@@ -4,3 +4,4 @@ env/
 log/
 test/
 lib/__pycache__/
+autotask/
