@@ -78,6 +78,6 @@ class PrpCrypt(object):
 #     result = pc.decrypt(redata)
 #     print(result)
 #     pc = PrpCrypt('1', '2')
-#     password = pc.decrypt()  # 解密
+#     password = pc.decrypt('')  # 解密
 #     print(password)
 #---------------------------------------------
