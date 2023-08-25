@@ -1,11 +1,14 @@
 # 导入包
-import conf.Config as cf
 import logging
 from logging.handlers import RotatingFileHandler
+import configparser
 
+# 读取配置文件
+cf = configparser.ConfigParser()
+cf.read('d:/PyAsst/conf/config.ini', encoding='utf-8')
 
 # 定义日志路径+文件名
-log_file = cf.Log_Path + 'logfile.log'
+log_file = cf.get('Path', "logPath") + 'logfile.log'
 # 定义日志格式
 log_format = logging.Formatter('%(asctime)s thread:%(thread)d process:%(process)d  message:%(message)s')
 
