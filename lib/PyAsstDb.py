@@ -5,6 +5,7 @@ from lib.PyAsstAes import PrpCrypt
 import configparser
 import pandas as pd
 from sshtunnel import SSHTunnelForwarder
+import os
 
 
 
@@ -13,8 +14,10 @@ class mySqlDb:
     def getdbconfig(self, instance):
 
         # 获取config.ini文件
+        cur_path = os.path.abspath(os.path.dirname(__file__))
+        config_path = cur_path[:cur_path.find("PyAsst")] + 'PyAsst/conf/'
         cf = configparser.ConfigParser()
-        cf.read('d:/PyAsst/conf/db.ini', encoding='utf-8')
+        cf.read(config_path + 'db.ini', encoding='utf-8')
 
         host = cf.get(instance, "host")
         port = cf.get(instance, "port")
@@ -94,19 +97,19 @@ class mySqlDb:
 
 
 # ----------------------------------------------
-if __name__ == '__main__':
-    sql ='select * from store'
-
-    # 创建数据库对象
-    db = mysqlDb()
-
-    # 连接数据库
-    engine = db.getConnect(db.getdbconfig('EOMS_primary'))
-
-    # 查询SQL
-    df = db.execQuery(sql, engine)
-    print(df)
-
-    # 关闭数据库
-    db.closeConnect(engine)
+# if __name__ == '__main__':
+#     sql ='select * from store'
+#
+#     # 创建数据库对象
+#     db = mySqlDb()
+#
+#     # 连接数据库
+#     engine = db.getConnect(db.getdbconfig('EOMS_primary'))
+#
+#     # 查询SQL
+#     df = db.execQuery(sql, engine)
+#     print(df)
+#
+#     # 关闭数据库
+#     db.closeConnect(engine)
 # ----------------------------------------------
