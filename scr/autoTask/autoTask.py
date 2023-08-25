@@ -89,6 +89,7 @@ def loadTask():
         # 加载task
         scheduler.add_job(taskJob, args=[running_path + task_file], next_run_time=datetime.datetime.now())
 
+
 def taskJob(task):
 
     # 拆分文件名,后缀,路径,
@@ -100,24 +101,28 @@ def taskJob(task):
 
     # 读取XML
     et_tree = et.parse(task)
-    rootnode = et_tree.getroot().attrib
+    rootnode = et_tree.getroot()
+    nodes_list = rootnode.findall('script')
 
     # 执行task
     try:
-        res = subprocess.run('python {}'.format(rootnode['Script']), stdout=subprocess.PIPE)
-        log.info(res.stdout.read())
+        # 遍历全部script节点
+        for node in nodes_list:
+            res = subprocess.Popen('python {}'.format(node.attrib['path']), stdout=subprocess.PIPE, encoding='utf-8')
+            log.info(res.stdout.read())
     except Exception as err:
         pass
 
-    # 备份到archive
-    if rootnode['Type'] == 'Repeat':
+    # task执行完成后处理
+    if rootnode.attrib['type'] == 'Repeat':
 
         # 计算下一次执行时间
         now = datetime.datetime.now()
-        cron = croniter.croniter(rootnode['Cron'], now)
+        cron = croniter.croniter(rootnode.attrib['cron'], now)
         cronNextTime = [cron.get_next(datetime.datetime).strftime('%Y-%m-%d %H#%M#%S')][0]
         shutil.move(task, waiting_path + cronNextTime + '_' + filename + ext)
-    if rootnode['Type'] == 'Once':
+
+    elif rootnode.attrib['type'] == 'Once':
         shutil.move(task, archive_path + filename + '_' + timestamp + ext)
     else:
         log.info('无法识别Type')
@@ -162,6 +167,7 @@ if __name__ == '__main__':
         'max_instances': 10
     }
 
+
     # 检查上次未完成Task
     checkRunningTask()
 
@@ -177,4 +183,5 @@ if __name__ == '__main__':
     # 一直运行
     while True:
         pass
+
 
