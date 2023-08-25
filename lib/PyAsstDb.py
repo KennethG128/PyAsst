@@ -8,13 +8,13 @@ from sshtunnel import SSHTunnelForwarder
 
 
 
-class mysqlDb:
+class mySqlDb:
 
     def getdbconfig(self, instance):
 
         # 获取config.ini文件
         cf = configparser.ConfigParser()
-        cf.read('d:/PyAsst/conf/config.ini', encoding='utf-8')
+        cf.read('d:/PyAsst/conf/db.ini', encoding='utf-8')
 
         host = cf.get(instance, "host")
         port = cf.get(instance, "port")
@@ -94,19 +94,19 @@ class mysqlDb:
 
 
 # ----------------------------------------------
-# if __name__ == '__main__':
-#     sql ='select * from store'
-#
-#     # 创建数据库对象
-#     db = mysqlDb()
-#
-#     # 连接数据库
-#     engine = db.getConnect(db.getdbconfig('EOMS_primary'))
-#
-#     # 查询SQL
-#     df = db.execQuery(sql, engine)
-#     print(df)
-#
-#     # 关闭数据库
-#     db.closeConnect(engine)
+if __name__ == '__main__':
+    sql ='select * from store'
+
+    # 创建数据库对象
+    db = mysqlDb()
+
+    # 连接数据库
+    engine = db.getConnect(db.getdbconfig('EOMS_primary'))
+
+    # 查询SQL
+    df = db.execQuery(sql, engine)
+    print(df)
+
+    # 关闭数据库
+    db.closeConnect(engine)
 # ----------------------------------------------
