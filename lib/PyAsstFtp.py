@@ -10,7 +10,7 @@ class sftp:
 
     def __init__(self, host_dict):
 
-        # 获取config.ini文件
+        # 获取ftp.ini文件
         cur_path = os.path.abspath(os.path.dirname(__file__))
         config_path = cur_path[:cur_path.find("PyAsst")] + 'PyAsst/conf/'
         cf = configparser.ConfigParser()

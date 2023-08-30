@@ -13,7 +13,7 @@ class mySqlDb:
 
     def getdbconfig(self, instance):
 
-        # 获取config.ini文件
+        # 获取db.ini文件
         cur_path = os.path.abspath(os.path.dirname(__file__))
         config_path = cur_path[:cur_path.find("PyAsst")] + 'PyAsst/conf/'
         cf = configparser.ConfigParser()
