@@ -125,8 +125,8 @@ def taskJob(task):
         shutil.move(task, waiting_path + cronNextTime + '_' + filename + ext)
 
     elif rootnode.attrib['type'] == 'Once':
-        # shutil.move(task, archive_path + filename + '_' + timestamp + ext)
-        shutil.move(task, archive_path + filename + ext)
+        shutil.move(task, archive_path + filename + '_' + timestamp + ext)
+        # shutil.move(task, archive_path + filename + ext)
     else:
         log.info('无法识别Type')
         shutil.move(task, archive_path + filename + '_' + timestamp + ext)
