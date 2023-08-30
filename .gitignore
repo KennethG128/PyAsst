@@ -5,3 +5,4 @@ log/
 test/
 lib/__pycache__/
 autotask/
+data/
