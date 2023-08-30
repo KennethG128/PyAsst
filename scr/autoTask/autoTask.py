@@ -19,7 +19,7 @@ import xml.etree.ElementTree as et
 
 
 # 路径定义
-root_path = 'd:/PyAsst/autotask/'
+root_path = 'd:/PyAsst/autoTask/'
 waiting_path = root_path + 'waiting/'
 archive_path = root_path + 'archive/'
 running_path = root_path + 'running/'
@@ -108,10 +108,12 @@ def taskJob(task):
     try:
         # 遍历全部script节点
         for node in nodes_list:
-            res = subprocess.Popen('python {}'.format(node.attrib['path']), stdout=subprocess.PIPE, encoding='utf-8')
+
+            # 参数1=XML文件路径,  参数2=script对应的scriptId
+            res = subprocess.Popen('python {} {} {}'.format(node.attrib['path'], task, node.attrib['sid']), stdout=subprocess.PIPE, encoding='utf-8')
             log.info(res.stdout.read())
     except Exception as err:
-        pass
+        log.info('sid:{} {} 运行报错: {}'.format(node.attrib['sid'], node.attrib['path'], err))
 
     # task执行完成后处理
     if rootnode.attrib['type'] == 'Repeat':
@@ -123,7 +125,8 @@ def taskJob(task):
         shutil.move(task, waiting_path + cronNextTime + '_' + filename + ext)
 
     elif rootnode.attrib['type'] == 'Once':
-        shutil.move(task, archive_path + filename + '_' + timestamp + ext)
+        # shutil.move(task, archive_path + filename + '_' + timestamp + ext)
+        shutil.move(task, archive_path + filename + ext)
     else:
         log.info('无法识别Type')
         shutil.move(task, archive_path + filename + '_' + timestamp + ext)
@@ -172,7 +175,7 @@ if __name__ == '__main__':
     checkRunningTask()
 
     # 扫描wating里已到期的xml任务
-    scheduler.add_job(waitingTaskMove, trigger='interval', seconds=20)
+    scheduler.add_job(waitingTaskMove, trigger='interval', seconds=25)
 
     # 加载任务
     scheduler.add_job(loadTask, trigger='interval', seconds=30)
