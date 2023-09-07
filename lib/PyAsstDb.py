@@ -9,6 +9,7 @@ import os
 
 
 
+
 class mySqlDb:
 
     def getdbconfig(self, instance):
@@ -45,16 +46,14 @@ class mySqlDb:
             )
             tunnel.start()
             port = str(tunnel.local_bind_port)
-            EngineArr = 'mysql+mysqlconnector://{}:{}@{}:{}/{}?charset=utf8'.format(user, password, '127.0.0.1', port,  db)
-
+            EngineArr = 'mysql+mysqlconnector://{}:{}@{}:{}/{}?charset = utf8'.format(user, password, '127.0.0.1', port, db)
         else:
             EngineArr = '''mysql+mysqlconnector://''' + user + ''':''' + password + '''@''' + host + ''':''' + port + '''/''' + db
-
         return EngineArr
 
     def getConnect(self, EngineArr):
         try:
-            engin = create_engine(EngineArr)
+            engin = create_engine(EngineArr, connect_args={'auth_plugin': 'mysql_native_password'})
             log.info('数据库连接成功')
         except Exception as err:
             log.info('数据库连接失败,%s' % err)
@@ -98,13 +97,13 @@ class mySqlDb:
 
 # ----------------------------------------------
 # if __name__ == '__main__':
-#     sql ='select * from store'
+#     sql ='select * from alipay_settle_fee limit 100'
 #
 #     # 创建数据库对象
 #     db = mySqlDb()
 #
 #     # 连接数据库
-#     engine = db.getConnect(db.getdbconfig('EOMS_primary'))
+#     engine = db.getConnect(db.getdbconfig('localomsdb'))
 #
 #     # 查询SQL
 #     df = db.execQuery(sql, engine)
