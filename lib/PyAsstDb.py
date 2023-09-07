@@ -46,7 +46,7 @@ class mySqlDb:
             )
             tunnel.start()
             port = str(tunnel.local_bind_port)
-            EngineArr = 'mysql+mysqlconnector://{}:{}@{}:{}/{}?charset = utf8'.format(user, password, '127.0.0.1', port, db)
+            EngineArr = 'mysql+mysqlconnector://{}:{}@{}:{}/{}?charset=utf8'.format(user, password, '127.0.0.1', port, db)
         else:
             EngineArr = '''mysql+mysqlconnector://''' + user + ''':''' + password + '''@''' + host + ''':''' + port + '''/''' + db
         return EngineArr
@@ -97,14 +97,20 @@ class mySqlDb:
 
 # ----------------------------------------------
 # if __name__ == '__main__':
-#     sql ='select * from alipay_settle_fee limit 100'
+#     sql = '''
+#     select
+#             *
+#             from shipment_header sh
+#             where 1
+# limit 100
+#     '''
 #
 #     # 创建数据库对象
 #     db = mySqlDb()
 #
 #     # 连接数据库
-#     engine = db.getConnect(db.getdbconfig('localomsdb'))
-#
+#     engine = db.getConnect(db.getdbconfig('LRL_primary_ssh'))
+# 
 #     # 查询SQL
 #     df = db.execQuery(sql, engine)
 #     print(df)
