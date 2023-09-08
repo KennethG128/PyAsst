@@ -12,8 +12,8 @@ import os
 if __name__ == '__main__':
 
     # 读取XML
-    # xml_file = 'D:/PyAsst/autoTask/TTXPOST测试.xml
-
+    # xml_file = 'D:/PyAsst/autoTask/waiting/2023-09-04 18#00#00_获取250header.xml'
+    # xml_sid = '1'
     xml_file = sys.argv[1]
     xml_sid = sys.argv[2]
     et_tree = et.parse(xml_file)
