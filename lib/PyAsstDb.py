@@ -110,7 +110,7 @@ class mySqlDb:
 #
 #     # 连接数据库
 #     engine = db.getConnect(db.getdbconfig('LRL_primary_ssh'))
-# 
+#
 #     # 查询SQL
 #     df = db.execQuery(sql, engine)
 #     print(df)
