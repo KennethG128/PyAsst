@@ -15,7 +15,7 @@ import datetime
 
 if __name__ == '__main__':
     # 读取XML
-    # xml_file = 'D:/PyAsst/autoTask/post测试.xml'
+    # xml_file = 'D:/PyAsst/autoTask/waiting/3023-09-04 19#00#00_response执行.xml'
     # xml_sid = '1'
     xml_file = sys.argv[1]
     xml_sid = sys.argv[2]
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
         # 读取excel
         file_info_df = pd.read_excel(waiting_path + file_xlsx, sheet_name='info')
-        file_value_df = pd.read_excel(waiting_path + file_xlsx, sheet_name='value')
+        file_value_df = pd.read_excel(waiting_path + file_xlsx, sheet_name='value', keep_default_na=False, dtype=str)
 
         # 获取info信息
         url = file_info_df.loc[0, 'url']
@@ -56,11 +56,10 @@ if __name__ == '__main__':
         headers = {}
         f = open(header_path + header + '.properties', encoding='utf-8')
         for line in f.read().split('\n'):
-            key = line.split(':')[0]
-            value = line.split(':')[1]
+            # 拆分键与值,仅1次
+            key, value = line.split(':', 1)
             headers[key] = value
-
-
+        f.close()
 
         # 检查字段数量是否一到
         if len(file_value_df.columns) != len(re.findall('{columns}', form)):
@@ -98,22 +97,25 @@ if __name__ == '__main__':
             log.info('正在提交请求：%s / %s' % (count_n, len(form_list)))
             form_str = form_str.encode('UTF-8').decode('latin1')
             count_n = count_n + 1
+
             if responsetype == 'post':
                 try:
                     res = requests.post(url, data=form_str, headers=headers)
+                    log.info(res.text)
                 except Exception as err:
                     log.info('form执行失败 %s' % form_str)
                     log.info('报错信息: %s' % err)
             elif responsetype == 'put':
                 try:
+                    pass
                     res = requests.put(url, data=form_str, headers=headers)
+                    log.info(res.text)
                 except Exception as err:
                     log.info('form执行失败 %s' % form_str)
                     log.info('报错信息: %s' % err)
             else:
                 log.info('无效的responsetype配置,中止运行')
                 sys.exit()
-            log.info(res.text)
             time.sleep(1)
 
         # 执行完成备份excel
