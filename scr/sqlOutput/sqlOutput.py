@@ -60,10 +60,10 @@ def datetimeSplit(startdate, enddate, unit, step):
 
 if __name__ == '__main__':
     # 读取XML
-    xml_file = 'D:/PyAsst/autoTask/archive/sql测试.xml'
-    xml_sid = '1'
-    # xml_file = sys.argv[1]
-    # xml_sid = sys.argv[2]
+    # xml_file = 'D:/PyAsst/autoTask/archive/sqlOutput模板.xml'
+    # xml_sid = '1'
+    xml_file = sys.argv[1]
+    xml_sid = sys.argv[2]
     et_tree = et.parse(xml_file)
     sql = et_tree.find('.//script[@sid="' + xml_sid + '"]/sql').text
     fieldtype = et_tree.find('.//script[@sid="' + xml_sid + '"]/field').get('type')
