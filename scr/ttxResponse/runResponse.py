@@ -21,13 +21,24 @@ if __name__ == '__main__':
     xml_sid = sys.argv[2]
 
 
-
     # 定位路径
-    cur_path = os.path.abspath(os.path.dirname(__file__))
-    data_path = cur_path[:cur_path.find("PyAsst")] + 'PyAsst/data/ttxResponse/'
-    waiting_path = data_path + 'waiting/'
-    archive_path = data_path + 'archive/'
-    header_path = data_path + 'header/'
+    try:
+        cur_path = os.path.abspath(os.path.dirname(__file__))
+        data_path = cur_path[:cur_path.find("PyAsst")] + 'PyAsst/data/ttxResponse/'
+        waiting_path = data_path + 'waiting/'
+        archive_path = data_path + 'archive/'
+        header_path = data_path + 'header/'
+    except Exception as err:
+        log.info('启动失败,自动退出程序 报错信息: %s ' % err)
+        sys.exit()
+
+    # 检查文件路径
+    pathCheck_list = [waiting_path, archive_path, archive_path, header_path]
+    for path in pathCheck_list:
+        if not os.path.exists(path):
+            log.info('启动检查失败,文件{}不存在. 自动退出程序'.format(path))
+            sys.exit()
+    log.info('启动检查正常')
 
 
     # 遍历waiting文件夹
