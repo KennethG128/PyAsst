@@ -109,7 +109,8 @@ def taskJob(task):
         # 遍历全部script节点
         for node in nodes_list:
 
-            # 参数1=XML文件路径,  参数2=script对应的scriptId
+            log.info('准备执行 XML: {} sid: {}'.format(file, node.attrib['sid']))
+            # 参数1=python脚本路径,  参数2=script对应的scriptId
             res = subprocess.Popen('python {} {} {}'.format(node.attrib['path'], task, node.attrib['sid']), stdout=subprocess.PIPE, encoding='utf-8')
             log.info(res.stdout.read())
     except Exception as err:
@@ -126,7 +127,6 @@ def taskJob(task):
 
     elif rootnode.attrib['type'] == 'Once':
         shutil.move(task, archive_path + filename + '_' + timestamp + ext)
-        # shutil.move(task, archive_path + filename + ext)
     else:
         log.info('无法识别Type')
         shutil.move(task, archive_path + filename + '_' + timestamp + ext)
